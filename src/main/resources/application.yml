@@ -15,3 +15,6 @@ knife4j:
     profile: dev
     open-api:
     version: 3
+
+jwt:
+  secret: your-secret-key-here
