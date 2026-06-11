@@ -72,11 +72,11 @@
             <artifactId>java-jwt</artifactId>
             <version>4.4.0</version>
         </dependency>
-        <!-- Knife4j依赖 -->
+        <!-- Knife4j (社区fork版，兼容Spring Boot 3.5.x) -->
         <dependency>
-            <groupId>com.github.xiaoymin</groupId>
+            <groupId>com.baizhukui</groupId>
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-            <version>4.4.0</version>
+            <version>5.0.8</version>
         </dependency>
         <!--独立的 BCrypt 库，不依赖 Spring Security -->
         <dependency>

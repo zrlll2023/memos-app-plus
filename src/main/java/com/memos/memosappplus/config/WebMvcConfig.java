@@ -18,11 +18,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns(          // 放行这些路径
                         "/api/user/register",
                         "/api/user/login",
+                        "/api/logout",
+
                         "/doc.html",  // 文档页面的主框架
                         "/webjars/**",  // CSS / JS / 图片
                         "/v3/api-docs/**",  // 动态生成的接口描述 JSON
                         "/swagger-resources/**", // 接口分组与服务发现
                         "/favicon.ico"  // 浏览器标签页小图标
+
                 );
     }
 }

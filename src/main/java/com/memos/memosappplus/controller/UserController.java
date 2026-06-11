@@ -6,17 +6,15 @@ import com.memos.memosappplus.dto.UserRegisterDTO;
 import com.memos.memosappplus.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
-    @Autowired
+    @Autowired  // 让 Spring 自动注入这个对象，否则它是 null，一调用就报空指针
     private UserService userService;
+
 
     // 注册接口
     @PostMapping("/register")
@@ -31,4 +29,12 @@ public class UserController {
         String token = userService.login(dto);
         return Result.success(token);
     }
-}
+
+    // 登出接口
+    @PostMapping("/logout")
+    // @RequestHeader("Authorization") 的意思是 String token = request.getHeader("Authorization");
+    public Result<Void> logout(@RequestHeader("Authorization") String token) {
+        userService.logout(token);
+        return Result.success(null);
+        }
+    }

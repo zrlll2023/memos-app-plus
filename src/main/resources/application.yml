@@ -11,10 +11,17 @@ spring:
       port: 6379
 
 knife4j:
-  spring:
-    profile: dev
-    open-api:
-    version: 3
+  enable: true
+
+# 是 Knife4j 旧版（Spring Boot 2.x）的。
+# 你用的 knife4j-openapi3-jakarta-spring-boot-starter 4.4.0 不认识它们，
+# 导致 Knife4j 无法正确初始化，后端没生成 API 文档数据，
+# 页面请求 /v3/api-docs 时拿不到数据所以报异常。
+#knife4j:
+#  spring:
+#    profile: dev
+#    open-api:
+#    version: 3
 
 jwt:
   secret: your-secret-key-here

@@ -4,7 +4,9 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -14,6 +16,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Value("${jwt.secret}")
     private String jwtSecret;
+    // 声明一个 Redis 操作对象，用来往 Redis 里存/取数据（比如把退出的 token 加入黑名单）
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     @Override
     public boolean preHandle /* "未处理"的意思 */(HttpServletRequest request,
@@ -30,6 +35,12 @@ public class LoginInterceptor implements HandlerInterceptor {
             JWT.require(Algorithm.HMAC256(jwtSecret))
                     .build()
                     .verify(token);
+            // 验证完 Token 合法之后，检查是否在黑名单
+            String isBlacklisted = redisTemplate.opsForValue().get("blacklist:" + token);
+            if (isBlacklisted != null) {
+                response.setStatus(401);
+                return false;
+            }
         } catch (Exception e) {
             response.setStatus(401);
             return false;  // 拦截

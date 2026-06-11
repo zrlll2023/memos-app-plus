@@ -9,10 +9,14 @@ import com.memos.memosappplus.entity.User;
 import com.memos.memosappplus.mapper.UserMapper;
 import com.memos.memosappplus.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 @Service
@@ -41,9 +45,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     //登录
-    @Value("${jwt.secret}")
+
     // 告诉Spring：去yml里找到jwt.secret这个配置，把值注入到这个字段里
+    @Value("${jwt.secret}")
     private String jwtSecret;
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     @Override
     public String login(UserLoginDTO dto) {
@@ -75,4 +82,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return token;
     }
 
+    // 退出
+    @Override
+    public void logout(String token) {
+        redisTemplate.opsForValue().set("blacklist:" + token, "1", 7, TimeUnit.DAYS);
+        // "blacklist:" 是用来标识「这是 Redis 中的黑名单 Token」
+    }
 }
