@@ -391,7 +391,7 @@ open http://localhost:8080/doc.html
 
 > 当前代码状态：5 个实体类、5 个 Mapper、5 个 Service 接口及 ServiceImpl 骨架已搭好（`ServiceImpl` 暂为空实现），Controller 仅有 `UserController`。本阶段需补全各模块 Controller 与业务逻辑。
 
-**4-1 分类模块** ⬜
+**4-1 分类模块** (已完成)
 - `CategoryController` + `CategoryService` + `CategoryServiceImpl`
 - 接口：新增分类、删除分类、查询所有分类
 
