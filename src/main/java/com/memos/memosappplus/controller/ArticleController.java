@@ -20,10 +20,16 @@ public class ArticleController {
         return Result.success(null);
     }
 
-
     @GetMapping("/{id}")  // 通过id查找文章
     public Result<Article> getArticleById(@PathVariable Long id) {
         Article article = articleService.getById(id); // 返回的是一篇文章,类型是Article
         return Result.success(article);
+    }
+
+    // 修改文章
+    @PutMapping
+    public Result<Void> updateArticle(@RequestBody Article article) {
+        articleService.updateById(article);
+        return Result.success(null);
     }
 }
