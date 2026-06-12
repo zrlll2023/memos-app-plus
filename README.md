@@ -395,7 +395,7 @@ open http://localhost:8080/doc.html
 - `CategoryController` + `CategoryService` + `CategoryServiceImpl`
 - 接口：新增分类、删除分类、查询所有分类
 
-**4-2 标签模块** ⬜
+**4-2 标签模块** (已完成)
 - `TagController` + `TagService` + `TagServiceImpl`
 - 接口：新增标签、删除标签、查询所有标签
 
